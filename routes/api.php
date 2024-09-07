@@ -14,7 +14,11 @@ Route::prefix('/v1')->group( function () {
     
         Route::post('/penelitian', [PenelitianController::class, 'store']);
         Route::get('/penelitian', [PenelitianController::class, 'index']);
-        Route::get('/penelitian/{id}', [PenelitianController::class, 'show']);
+        Route::get('/penelitian/{penelitian}', [PenelitianController::class, 'show']);
+        Route::delete('/penelitian/{penelitian}', [PenelitianController::class, 'destroy']);
+        Route::put('/penelitian/{penelitian}', [PenelitianController::class, 'update']);
+
+
 
         Route::post('/logout', [AuthController::class, 'logout']);
     });

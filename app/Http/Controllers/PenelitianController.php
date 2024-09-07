@@ -43,4 +43,32 @@ class PenelitianController extends Controller
             'data' => new PenelitianResource($penelitian),
         ], 201);
     }
+
+    public function show(Penelitian $penelitian)
+    {
+        return response()->json([
+            'data' => new PenelitianResource($penelitian),
+        ]);
+    }
+
+    public function destroy(Penelitian $penelitian)
+    {
+        $penelitian->delete();
+        return response()->json([
+            'message' => 'Data deleted successfully',
+        ], 200);
+    }
+
+    public function update(StorePenelitianRequest $request, Penelitian $penelitian)
+    {
+        $validatedData = $request->validated();
+        $penelitian->update($validatedData);
+
+        return response()->json([
+            'message' => 'Data updated successfully',
+            'data' => new PenelitianResource($penelitian),
+        ], 200);
+    }
+
+
 }
