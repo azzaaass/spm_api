@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('dosens', function (Blueprint $table) {
             $table->integer('nip')->primary();
+            $table->string('nidn')->unique();
             $table->string('name');
-            $table->string('slug');
+            $table->string('gelar_depan')->nullable();
+            $table->string('gelar_belakang')->nullable();
+            $table->string('pendidikan')->nullable();
+            $table->string('kode_dosen')->nullable();
             $table->foreignId('id_prodi')->constrained('prodis');
             $table->timestamps();
         });

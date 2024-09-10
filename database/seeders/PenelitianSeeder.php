@@ -14,12 +14,14 @@ class PenelitianSeeder extends Seeder
     public function run(): void
     {
         Penelitian::create([
+            'no_sk' => '123',
+            'no_kontrak' => '123',
             'judul' => 'Cara Cepat Kaya Raya',
-            'dana' => 1000000,
+            'skema' => '123',
             'tahun' => 2022,
-            'id_prodi' => 1,
-            'publish' => 'Sinta',
-            'kategori' => 'Jurnal Internasional',
+            'bidang' => '123',
+            'dana' => 1000000,
+            'sumber_dana' => 'Internal',
         ]);
     }
 }

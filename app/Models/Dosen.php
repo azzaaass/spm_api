@@ -9,6 +9,11 @@ class Dosen extends Model
 {
     protected $guarded = [];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     protected $primaryKey = 'nip';
     public $incrementing = false;
     protected $keyType = 'int';

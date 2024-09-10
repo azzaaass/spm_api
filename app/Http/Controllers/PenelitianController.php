@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePenelitianRequest;
+use App\Http\Resources\PaginationMetaResource;
 use App\Http\Resources\PenelitianResource;
 use App\Models\Penelitian;
+use Exception;
 use Illuminate\Http\Request;
 
 class PenelitianController extends Controller
@@ -14,39 +16,53 @@ class PenelitianController extends Controller
         $perPage = $request->input('per_page', 20);
         $search = $request->input('s');
 
-        // search using scope search all from penelitian model
-        $searchResult = Penelitian::when($search, function ($query, $search) {
-            return $query->searchAll($search);
-        });
+        try {
+            // search using scope search all from penelitian model
+            $searchResult = Penelitian::when($search, function ($query, $search) {
+                return $query->searchAll($search);
+            });
 
-        $penelitians = $searchResult->paginate($perPage);
+            $penelitians = $searchResult
+                // ->with('prodi')
+                ->with('penelitian_dosen.dosen')
+                ->with('penelitian_mahasiswa.mahasiswa')
+                ->paginate($perPage);
 
-        return response()->json([
-            'message' => 'Data retrieved successfully',
-            'data' => PenelitianResource::collection($penelitians),
-            'meta' => [
-                'current_page' => $penelitians->currentPage(),
-                'last_page' => $penelitians->lastPage(),
-                'per_page' => $penelitians->perPage(),
-                'total' => $penelitians->total(),
-            ],
-        ], 200);
+            return response()->json([
+                'message' => 'Data retrieved successfully',
+                'data' => PenelitianResource::collection($penelitians),
+                'meta' => PaginationMetaResource::meta($penelitians),
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Data not found',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function store(StorePenelitianRequest $request)
     {
-        $validatedData = $request->validated();
-        $penelitian = Penelitian::create($validatedData);
+        try {
+            $validatedData = $request->validated();
+            $penelitian = Penelitian::create($validatedData);
 
-        return response()->json([
-            'message' => 'Data created successfully',
-            'data' => new PenelitianResource($penelitian),
-        ], 201);
+            return response()->json([
+                'message' => 'Data created successfully',
+                'data' => new PenelitianResource($penelitian),
+            ], 201);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Data not found',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function show(Penelitian $penelitian)
     {
         return response()->json([
+            'message' => 'Data retrieved successfully',
             'data' => new PenelitianResource($penelitian),
         ]);
     }
@@ -61,13 +77,20 @@ class PenelitianController extends Controller
 
     public function update(StorePenelitianRequest $request, Penelitian $penelitian)
     {
-        $validatedData = $request->validated();
-        $penelitian->update($validatedData);
+        try {
+            $validatedData = $request->validated();
+            $penelitian->update($validatedData);
 
-        return response()->json([
-            'message' => 'Data updated successfully',
-            'data' => new PenelitianResource($penelitian),
-        ], 200);
+            return response()->json([
+                'message' => 'Data updated successfully',
+                'data' => new PenelitianResource($penelitian),
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Data not found',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
 
 
