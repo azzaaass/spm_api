@@ -14,10 +14,14 @@ class DosenSeeder extends Seeder
     public function run(): void
     {
         Dosen::create([
-            'nip' => 123456789,
-            'name' => 'Bernandus Aji Seno',
-            'slug' => 'BOS',
-            'id_prodi' => 1
+            'nip' => 18620029,
+            'nidn' => '0728016901',
+            'name' => 'Tri Agus Djoko Kuntjoro',
+            'gelar_depan' => 'Ir.',
+            'gelar_belakang' => 'M.T.',
+            'pendidikan' => 'S2',
+            'kode_dosen' => 'ORO',
+            'id_prodi' => 6 // teknik telekomunikasi
         ]);
     }
 }

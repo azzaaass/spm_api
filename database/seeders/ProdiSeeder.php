@@ -15,23 +15,27 @@ class ProdiSeeder extends Seeder
     {
         Prodi::create([
             'name' => 'Teknologi Informasi',
-            'slug' => 'IT',
+            'kode_prodi' => 'IT',
         ]);
         Prodi::create([
             'name' => 'Sistem Informasi',
-            'slug' => 'SI',
+            'kode_prodi' => 'SI',
         ]);
         Prodi::create([
             'name' => ' Informatika',
-            'slug' => 'IF',
+            'kode_prodi' => 'IF',
         ]);
         Prodi::create([
             'name' => 'Bisnis Digital',
-            'slug' => 'Bisdig',
+            'kode_prodi' => 'Bisdig',
         ]);
         Prodi::create([
             'name' => 'Sais Data',
-            'slug' => 'DS',
+            'kode_prodi' => 'DS',
+        ]);
+        Prodi::create([
+            'name' => 'Teknik Telekomunikasi',
+            'kode_prodi' => 'TT',
         ]);
     }
 }

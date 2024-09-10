@@ -19,5 +19,11 @@ class MahasiswaSeeder extends Seeder
             'angkatan' => 2021,
             'id_prodi' => 1
         ]);
+        Mahasiswa::create([
+            'nim' => 1202210482,
+            'name' => 'Sonia Dwi Rahmawati',
+            'angkatan' => 2021,
+            'id_prodi' => 1
+        ]);
     }
 }

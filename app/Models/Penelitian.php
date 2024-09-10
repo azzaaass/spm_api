@@ -12,6 +12,21 @@ class Penelitian extends Model
 
     protected $guarded = ['id'];
 
+    // public function prodi()
+    // {
+    //     return $this->belongsTo(Prodi::class, 'id_prodi', 'id');
+    // }
+
+    public function penelitian_dosen()
+    {
+        return $this->hasMany(PenelitianDosen::class, 'id_penelitian', 'id');
+    }
+
+    public function penelitian_mahasiswa()
+    {
+        return $this->hasMany(PenelitianMahasiswa::class, 'id_penelitian', 'id');
+    }
+
     public function scopeSearchAll(Builder $query, $search)
     {
         return $query->where(function ($query) use ($search) {

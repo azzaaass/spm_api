@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePenelitianRequest extends FormRequest
+class PenelitianMahasiswaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,9 @@ class StorePenelitianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'judul' => 'required|string|max:255',
-            'dana' => 'required|numeric|min:0',
-            'tahun' => 'required|integer|digits:4|min:1900|max:' . date('Y'),
-            'id_prodi' => 'required|exists:prodis,id',
-            'publish' => 'required|string|max:255',
-            'kategori' => 'required|string|max:255',
+            'nim_mahasiswa' => 'required|exists:mahasiswas,nim',
+            'id_penelitian' => 'required|exists:penelitians,id',
+            'flag' => 'required|numeric|min:0',
         ];
     }
 }

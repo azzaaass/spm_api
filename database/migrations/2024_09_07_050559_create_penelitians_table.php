@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('penelitians', function (Blueprint $table) {
             $table->id();
+            $table->string('no_sk');
+            $table->string('no_kontrak');
             $table->string('judul');
-            $table->integer('dana');
+            $table->string('skema');
             $table->integer('tahun');
-            $table->foreignId('id_prodi')->constrained('prodis');
-            $table->string('publish');
-            $table->string('kategori');
+            $table->string('bidang');
+            $table->integer('dana');
+            $table->enum('sumber_dana', ['Internal', 'Eksternal']);
             $table->timestamps();
         });
     }
