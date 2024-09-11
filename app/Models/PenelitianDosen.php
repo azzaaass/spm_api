@@ -11,6 +11,8 @@ class PenelitianDosen extends Model
 
     protected $guarded = ['id'];
 
+    protected $hidden = ['id_penelitian', 'created_at', 'updated_at'];
+
     public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'nip_dosen', 'nip');

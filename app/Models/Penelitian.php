@@ -32,9 +32,7 @@ class Penelitian extends Model
         return $query->where(function ($query) use ($search) {
             $query->where('id', 'like', "%{$search}%")
                 ->orWhere('judul', 'like', "%{$search}%")
-                ->orWhere('dana', 'like', "%{$search}%")
-                ->orWhere('tahun', 'like', "%{$search}%")
-                ->orWhere('kategori', 'like', "%{$search}%");
+                ->orWhere('tahun', 'like', "%{$search}%");
         });
     }
 }

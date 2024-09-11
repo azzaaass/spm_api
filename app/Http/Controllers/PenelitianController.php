@@ -14,16 +14,31 @@ class PenelitianController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 20);
+
+        $searchTable = $request->input('s_table');
         $search = $request->input('s');
 
+        $sortingTable = $request->input('sort_table');
+        $sorting = $request->input('sort', 'asc');
+
         try {
-            // search using scope search all from penelitian model
-            $searchResult = Penelitian::when($search, function ($query, $search) {
-                return $query->searchAll($search);
-            });
+            // searching
+            (!$searchTable) ?
+                // search using scope search all from penelitian model
+                $searchResult = Penelitian::when($search, function ($query, $search) {
+                    return $query->searchAll($search);
+                })
+                :
+                $searchResult = Penelitian::when($search, function ($query, $search) use ($searchTable) {
+                    return $query->where($searchTable, '=', "{$search}");
+                });
+
+            // sorting
+            if ($sortingTable) {
+                $searchResult->orderBy($sortingTable, $sorting);
+            }
 
             $penelitians = $searchResult
-                // ->with('prodi')
                 ->with('penelitian_dosen.dosen')
                 ->with('penelitian_mahasiswa.mahasiswa')
                 ->paginate($perPage);
@@ -61,6 +76,9 @@ class PenelitianController extends Controller
 
     public function show(Penelitian $penelitian)
     {
+        $penelitian->load('penelitian_dosen.dosen.prodi')
+            ->load('penelitian_mahasiswa.mahasiswa.prodi');
+
         return response()->json([
             'message' => 'Data retrieved successfully',
             'data' => new PenelitianResource($penelitian),

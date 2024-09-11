@@ -14,8 +14,12 @@ class HistoryJabatanSeeder extends Seeder
     public function run(): void
     {
         HistoryJabatan::create([
-            'id_dosen' => 1,
+            'nip_dosen' => 18620029,
             'id_jabatan' => 2,
+        ]);
+        HistoryJabatan::create([
+            'nip_dosen' => 18620029,
+            'id_jabatan' => 1,
         ]);
     }
 }
