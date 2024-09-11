@@ -11,7 +11,14 @@ class Mahasiswa extends Model
 
     protected $guarded = [''];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     protected $primaryKey = 'nim';
     public $incrementing = false;
     protected $keyType = 'int';
+    
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'id_prodi', 'id');
+    }
 }

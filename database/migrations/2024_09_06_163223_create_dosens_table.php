@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('gelar_depan')->nullable();
             $table->string('gelar_belakang')->nullable();
             $table->string('pendidikan')->nullable();
-            $table->string('kode_dosen')->nullable();
+            $table->string('kode_dosen')->unique()->nullable();
             $table->foreignId('id_prodi')->constrained('prodis');
             $table->timestamps();
         });

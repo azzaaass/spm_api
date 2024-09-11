@@ -16,14 +16,16 @@ class PenelitianResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'no_sk' => $this->no_sk,
+            'no_kontrak' => $this->no_kontrak,
             'judul' => $this->judul,
-            'dana' => $this->dana,
+            'skema' => $this->skema,
             'tahun' => $this->tahun,
-            'prodi' => $this->prodi,
+            'bidang' => $this->bidang,
+            'dana' => $this->dana,
+            'sumber_dana' => $this->sumber_dana,
             'dosen' => $this->penelitian_dosen,
             'mahasiswa' => $this->penelitian_mahasiswa,
-            'publish' => $this->publish,
-            'kategori' => $this->kategori,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

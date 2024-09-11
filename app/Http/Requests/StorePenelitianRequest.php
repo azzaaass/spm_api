@@ -22,12 +22,14 @@ class StorePenelitianRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'no_sk' => 'required|string|max:255',
+            'no_kontrak' => 'required|string|max:255',
             'judul' => 'required|string|max:255',
-            'dana' => 'required|numeric|min:0',
+            'skema' => 'required|string|max:255',
             'tahun' => 'required|integer|digits:4|min:1900|max:' . date('Y'),
-            'id_prodi' => 'required|exists:prodis,id',
-            'publish' => 'required|string|max:255',
-            'kategori' => 'required|string|max:255',
+            'bidang' => 'required|string|max:255',
+            'dana' => 'required|numeric|min:0',
+            'sumber_dana' => 'required|in:Internal,Eksternal',
         ];
     }
 }
