@@ -15,13 +15,13 @@ class MahasiswaSeeder extends Seeder
     {
         Mahasiswa::create([
             'nim' => 1202210481,
-            'name' => 'Baihaqi Ilmi',
+            'name' => 'Stephani Debora',
             'angkatan' => 2021,
             'id_prodi' => 1
         ]);
         Mahasiswa::create([
             'nim' => 1202210482,
-            'name' => 'Sonia Dwi Rahmawati',
+            'name' => 'Leonna Zhen',
             'angkatan' => 2021,
             'id_prodi' => 1
         ]);
