@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prestasis', function (Blueprint $table) {
+        Schema::create('prestasi_mahasiswas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_lomba')->nullable();
-            $table->string('juara')->nullable();
-            $table->string('url_foto')->nullable();
-            $table->string('url_sertifikat')->nullable();
+            $table->integer('nim_mahasiswa');
+            $table->foreign('nim_mahasiswa')->references('nim')->on('mahasiswas');
+            $table->foreignId('id_prestasi')->constrained('prestasis');
+            $table->integer('flag');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prestasis');
+        Schema::dropIfExists('prestasi_mahasiswas');
     }
 };

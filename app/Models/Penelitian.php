@@ -12,11 +12,6 @@ class Penelitian extends Model
 
     protected $guarded = ['id'];
 
-    // public function prodi()
-    // {
-    //     return $this->belongsTo(Prodi::class, 'id_prodi', 'id');
-    // }
-
     public function penelitian_dosen()
     {
         return $this->hasMany(PenelitianDosen::class, 'id_penelitian', 'id');
