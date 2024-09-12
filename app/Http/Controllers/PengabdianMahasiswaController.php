@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DosenRequest;
-use App\Http\Resources\DosenResource;
-use App\Http\Resources\PaginationMetaResource;
-use App\Models\Dosen;
+use App\Http\Requests\PengabdianMahasiswaRequest;
+use App\Http\Resources\PengabdianMahasiswaResource;
+use App\Models\PengabdianMahasiswa;
 use Exception;
 use Illuminate\Http\Request;
 
-class DosenController extends Controller
+class PengabdianMahasiswaController extends Controller
 {
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 20);
-
-        $searchTable = $request->input('s_table', 'nip');
+        $searchTable = $request->input('s_table', 'id_pengabdian');
         $search = $request->input('s');
 
         $sortingTable = $request->input('sort_table');
@@ -23,7 +21,7 @@ class DosenController extends Controller
 
         try {
             // searching
-            $searchResult = Dosen::when($search, function ($query, $search) use ($searchTable) {
+            $searchResult = PengabdianMahasiswa::when($search, function ($query, $search) use ($searchTable) {
                 return $query->where($searchTable, '=', "{$search}");
             });
 
@@ -32,15 +30,13 @@ class DosenController extends Controller
                 $searchResult->orderBy($sortingTable, $sorting);
             }
 
-            $dosens = $searchResult
-                ->with('prodi')
-                ->with('history_jabatan.jabatan')
+            $pengabdianMahasiswa = $searchResult
+                ->with('mahasiswa.prodi')
                 ->paginate($perPage);
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => DosenResource::collection($dosens),
-                'meta' => PaginationMetaResource::meta($dosens),
+                'data' => PengabdianMahasiswaResource::collection($pengabdianMahasiswa)
             ], 200);
         } catch (Exception $e) {
             return response()->json([
@@ -50,15 +46,14 @@ class DosenController extends Controller
         }
     }
 
-    public function store(DosenRequest $request)
+    public function store(PengabdianMahasiswaRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $dosen = Dosen::create($validatedData);
-
+            $validateData = $request->validated();
+            $pengabdianMahasiswa = PengabdianMahasiswa::create($validateData);
             return response()->json([
                 'message' => 'Data created successfully',
-                'data' => new DosenResource($dosen),
+                'data' => new PengabdianMahasiswaResource($pengabdianMahasiswa),
             ], 201);
         } catch (Exception $e) {
             return response()->json([
@@ -68,33 +63,30 @@ class DosenController extends Controller
         }
     }
 
-    public function show(Dosen $dosen)
+    public function show(PengabdianMahasiswa $pengabdianMahasiswa)
     {
-        $dosen->load('prodi');
-
         return response()->json([
-            'message' => 'Data retrieved successfully',
-            'data' => new DosenResource($dosen),
-        ]);
+            'message' => 'Data ertried successfully',
+            'data' => new PengabdianMahasiswaResource($pengabdianMahasiswa),
+        ], 200);
     }
 
-    public function destroy(Dosen $dosen)
+    public function destroy(PengabdianMahasiswa $pengabdianMahasiswa)
     {
-        $dosen->delete();
+        $pengabdianMahasiswa->delete();
         return response()->json([
             'message' => 'Data deleted successfully',
         ], 200);
     }
 
-    public function update(DosenRequest $request, Dosen $dosen)
+    public function update(PengabdianMahasiswaRequest $request, PengabdianMahasiswa $pengabdianMahasiswa)
     {
         try {
-            $validatedData = $request->validated();
-            $dosen->update($validatedData);
-
+            $validateData = $request->validated();
+            $pengabdianMahasiswa->update($validateData);
             return response()->json([
                 'message' => 'Data updated successfully',
-                'data' => new DosenResource($dosen),
+                'data' => new PengabdianMahasiswaResource($pengabdianMahasiswa),
             ], 200);
         } catch (Exception $e) {
             return response()->json([

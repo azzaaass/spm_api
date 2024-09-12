@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePenelitianRequest extends FormRequest
+class PengabdianRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class StorePenelitianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_sk' => 'required|string|max:255|unique:penelitians,no_sk,' . ($this->penelitian->id ?? null),
-            'no_kontrak' => 'required|string|max:255|unique:penelitians,no_kontrak,' . ($this->penelitian->id ?? null),
+            'no_sk' => 'required|string|max:255|unique:pengabdians,no_sk,' . ($this->pengabdian->id ?? null),
+            'no_kontrak' => 'required|string|max:255|unique:pengabdians,no_kontrak,' . ($this->pengabdian->id ?? null),
             'judul' => 'required|string|max:255',
             'skema' => 'nullable|string|max:255',
             'tahun' => 'nullable|integer|digits:4|min:1900|max:' . date('Y'),

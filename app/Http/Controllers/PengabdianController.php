@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePenelitianRequest;
+use App\Http\Requests\PengabdianRequest;
 use App\Http\Resources\PaginationMetaResource;
-use App\Http\Resources\PenelitianResource;
-use App\Models\Penelitian;
+use App\Http\Resources\PengabdianResource;
+use App\Models\Pengabdian;
 use Exception;
 use Illuminate\Http\Request;
 
-class PenelitianController extends Controller
+class PengabdianController extends Controller
 {
     public function index(Request $request)
     {
@@ -24,12 +24,12 @@ class PenelitianController extends Controller
         try {
             // searching
             (!$searchTable) ?
-                // search using scope search all from penelitian model
-                $searchResult = Penelitian::when($search, function ($query, $search) {
+                // search using scope search all from pengabdian model
+                $searchResult = Pengabdian::when($search, function ($query, $search) {
                     return $query->searchAll($search);
                 })
                 :
-                $searchResult = Penelitian::when($search, function ($query, $search) use ($searchTable) {
+                $searchResult = Pengabdian::when($search, function ($query, $search) use ($searchTable) {
                     return $query->where($searchTable, '=', "{$search}");
                 });
 
@@ -38,15 +38,15 @@ class PenelitianController extends Controller
                 $searchResult->orderBy($sortingTable, $sorting);
             }
 
-            $penelitians = $searchResult
-                ->with('penelitian_dosen.dosen')
-                ->with('penelitian_mahasiswa.mahasiswa')
+            $pengabdians = $searchResult
+                ->with('pengabdian_dosen.dosen')
+                ->with('pengabdian_mahasiswa.mahasiswa')
                 ->paginate($perPage);
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PenelitianResource::collection($penelitians),
-                'meta' => PaginationMetaResource::meta($penelitians),
+                'data' => PengabdianResource::collection($pengabdians),
+                'meta' => PaginationMetaResource::meta($pengabdians),
             ], 200);
         } catch (Exception $e) {
             return response()->json([
@@ -56,15 +56,15 @@ class PenelitianController extends Controller
         }
     }
 
-    public function store(StorePenelitianRequest $request)
+    public function store(PengabdianRequest $request)
     {
         try {
             $validatedData = $request->validated();
-            $penelitian = Penelitian::create($validatedData);
+            $pengabdian = Pengabdian::create($validatedData);
 
             return response()->json([
                 'message' => 'Data created successfully',
-                'data' => new PenelitianResource($penelitian),
+                'data' => new PengabdianResource($pengabdian),
             ], 201);
         } catch (Exception $e) {
             return response()->json([
@@ -74,34 +74,34 @@ class PenelitianController extends Controller
         }
     }
 
-    public function show(Penelitian $penelitian)
+    public function show(Pengabdian $pengabdian)
     {
-        $penelitian->load('penelitian_dosen.dosen.prodi')
-            ->load('penelitian_mahasiswa.mahasiswa.prodi');
+        $pengabdian->load('pengabdian_dosen.dosen.prodi')
+            ->load('pengabdian_mahasiswa.mahasiswa.prodi');
 
         return response()->json([
             'message' => 'Data retrieved successfully',
-            'data' => new PenelitianResource($penelitian),
+            'data' => new PengabdianResource($pengabdian),
         ]);
     }
 
-    public function destroy(Penelitian $penelitian)
+    public function destroy(Pengabdian $pengabdian)
     {
-        $penelitian->delete();
+        $pengabdian->delete();
         return response()->json([
             'message' => 'Data deleted successfully',
         ], 200);
     }
 
-    public function update(StorePenelitianRequest $request, Penelitian $penelitian)
+    public function update(PengabdianRequest $request, Pengabdian $pengabdian)
     {
         try {
             $validatedData = $request->validated();
-            $penelitian->update($validatedData);
+            $pengabdian->update($validatedData);
 
             return response()->json([
                 'message' => 'Data updated successfully',
-                'data' => new PenelitianResource($penelitian),
+                'data' => new PengabdianResource($pengabdian),
             ], 200);
         } catch (Exception $e) {
             return response()->json([
