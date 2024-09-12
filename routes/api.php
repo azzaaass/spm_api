@@ -10,6 +10,8 @@ use App\Http\Controllers\PenelitianMahasiswaController;
 use App\Http\Controllers\PengabdianController;
 use App\Http\Controllers\PengabdianDosenController;
 use App\Http\Controllers\PengabdianMahasiswaController;
+use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\PrestasiMahasiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +65,16 @@ Route::prefix('/v1')->group(function () {
             Route::get('/pengabdianMahasiswa/{pengabdianMahasiswa}', [PengabdianMahasiswaController::class, 'show']);
             Route::put('/pengabdianMahasiswa/{pengabdianMahasiswa}', [PengabdianMahasiswaController::class, 'update']);
 
+            Route::get('/prestasi', [PrestasiController::class, 'index']);
+            Route::post('/prestasi', [PrestasiController::class, 'store']);
+            Route::get('/prestasi/{prestasi}', [PrestasiController::class, 'show']);
+            Route::put('/prestasi/{prestasi}', [PrestasiController::class, 'update']);
+
+            Route::get('/prestasiMahasiswa', [PrestasiMahasiswaController::class, 'index']);
+            Route::post('/prestasiMahasiswa', [PrestasiMahasiswaController::class, 'store']);
+            Route::get('/prestasiMahasiswa/{prestasiMahasiswa}', [PrestasiMahasiswaController::class, 'show']);
+            Route::put('/prestasiMahasiswa/{prestasiMahasiswa}', [PrestasiMahasiswaController::class, 'update']);
+
             // Route::post('/register', [AuthController::class, 'register']);
         });
 
@@ -76,6 +88,8 @@ Route::prefix('/v1')->group(function () {
             Route::delete('/pengabdian/{pengabdian}', [PengabdianController::class, 'destroy']);
             Route::delete('/pengabdianDosen/{pengabdianDosen}', [PengabdianDosenController::class, 'destroy']);
             Route::delete('/pengabdianMahasiswa/{pengabdianMahasiswa}', [PengabdianMahasiswaController::class, 'destroy']);
+            Route::delete('/prestasi/{prestasi}', [PrestasiController::class, 'destroy']);
+            Route::delete('/prestasiMahasiswa/{prestasiMahasiswa}', [PrestasiMahasiswaController::class, 'destroy']);
         });
 
         Route::post('/logout', [AuthController::class, 'logout']);
