@@ -25,8 +25,8 @@ class PengabdianResource extends JsonResource
             'dana' => $this->dana,
             'sumber_dana' => $this->sumber_dana,
             'laporan_akhir' => $this->laporan_akhir,
-            'dosen' => $this->penelitian_dosen,
-            'mahasiswa' => $this->penelitian_mahasiswa,
+            'dosen' => $this->pengabdian_dosen,
+            'mahasiswa' => $this->pengabdian_mahasiswa,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

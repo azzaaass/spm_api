@@ -22,8 +22,8 @@ class StorePenelitianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_sk' => 'required|string|max:255|unique:penelitians,no_sk',
-            'no_kontrak' => 'required|string|max:255|unique:penelitians,no_kontrak',
+            'no_sk' => 'required|string|max:255|unique:penelitians,no_sk,' . ($this->penelitian->id ?? null),
+            'no_kontrak' => 'required|string|max:255|unique:penelitians,no_kontrak,' . ($this->penelitian->id ?? null),
             'judul' => 'required|string|max:255',
             'skema' => 'nullable|string|max:255',
             'tahun' => 'nullable|integer|digits:4|min:1900|max:' . date('Y'),

@@ -22,8 +22,8 @@ class PengabdianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_sk' => 'required|string|max:255|unique:pengabdian,no_sk',
-            'no_kontrak' => 'required|string|max:255|unique:pengabdian,no_kontrak',
+            'no_sk' => 'required|string|max:255|unique:pengabdians,no_sk,' . ($this->pengabdian->id ?? null),
+            'no_kontrak' => 'required|string|max:255|unique:pengabdians,no_kontrak,' . ($this->pengabdian->id ?? null),
             'judul' => 'required|string|max:255',
             'skema' => 'nullable|string|max:255',
             'tahun' => 'nullable|integer|digits:4|min:1900|max:' . date('Y'),

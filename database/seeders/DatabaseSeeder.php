@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DosenSeeder::class);
         $this->call(MahasiswaSeeder::class);
         $this->call(JabatanSeeder::class);
-        
+
         $this->call(HistoryJabatanSeeder::class);
 
         $this->call(PenelitianSeeder::class);
@@ -26,5 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PenelitianMahasiswaSeeder::class);
 
         $this->call(PengabdianSeeder::class);
+        $this->call(PengabdianDosenSeeder::class);
+        $this->call(PengabdianMahasiswaSeeder::class);
     }
 }

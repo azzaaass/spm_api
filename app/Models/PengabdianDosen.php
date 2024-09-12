@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PenelitianMahasiswa extends Model
+class PengabdianDosen extends Model
 {
     use HasFactory;
 
@@ -13,13 +13,13 @@ class PenelitianMahasiswa extends Model
 
     protected $hidden = ['id_penelitian', 'created_at', 'updated_at'];
 
-    public function mahasiswa()
+    public function dosen()
     {
-        return $this->belongsTo(Mahasiswa::class, 'nim_mahasiswa', 'nim');
+        return $this->belongsTo(Dosen::class, 'nip_dosen', 'nip');
     }
 
-    public function penelitian()
+    public function pengabdian ()
     {
-        return $this->belongsTo(Penelitian::class, 'id_penelitian', 'id');
+        return $this->belongsTo(Pengabdian::class, 'id_pengabdian', 'id');
     }
 }

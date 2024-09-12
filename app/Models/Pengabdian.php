@@ -12,15 +12,15 @@ class Pengabdian extends Model
 
     protected $guarded = ['id'];
 
-    // public function penelitian_dosen()
-    // {
-    //     return $this->hasMany(PenelitianDosen::class, 'id_penelitian', 'id');
-    // }
+    public function pengabdian_dosen()
+    {
+        return $this->hasMany(PengabdianDosen::class, 'id_pengabdian', 'id');
+    }
 
-    // public function penelitian_mahasiswa()
-    // {
-    //     return $this->hasMany(PenelitianMahasiswa::class, 'id_penelitian', 'id');
-    // }
+    public function pengabdian_mahasiswa()
+    {
+        return $this->hasMany(PengabdianMahasiswa::class, 'id_pengabdian', 'id');
+    }
 
     public function scopeSearchAll(Builder $query, $search)
     {
