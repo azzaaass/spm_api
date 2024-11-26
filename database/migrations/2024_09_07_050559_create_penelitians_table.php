@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('penelitians', function (Blueprint $table) {
             $table->id();
-            $table->string('no_sk')->unique();
-            $table->string('no_kontrak')->unique();
+            $table->string('no_sk')->nullable();
+            $table->string('no_kontrak')->nullable();
             $table->string('judul');
             $table->string('skema')->nullable();
             $table->integer('tahun')->nullable();
