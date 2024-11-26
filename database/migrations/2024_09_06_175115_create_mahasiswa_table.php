@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
-            $table->integer('nim')->primary();
+            $table->bigInteger('nim')->primary();
             $table->string('name');
             $table->integer('angkatan');
             $table->foreignId('id_prodi')->constrained('prodis');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('mahasiswas'); 
     }
 };

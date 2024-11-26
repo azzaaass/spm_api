@@ -17,6 +17,7 @@ class DosenSeeder extends Seeder
             'nip' => 18620029,
             'nidn' => '0728016901',
             'name' => 'Tri Agus Djoko Kuntjoro',
+            'status' => 'Aktif',
             'gelar_depan' => 'Ir.',
             'gelar_belakang' => 'M.T.',
             'pendidikan' => 'S2',

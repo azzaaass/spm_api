@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('nip')->primary();
             $table->string('nidn')->unique();
             $table->string('name');
+            $table->enum('status', ['Aktif', 'Tidak aktif'])->nullable();
             $table->string('gelar_depan')->nullable();
             $table->string('gelar_belakang')->nullable();
             $table->string('pendidikan')->nullable();

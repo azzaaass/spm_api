@@ -25,6 +25,7 @@ class DosenRequest extends FormRequest
             'nip' => 'required|integer|digits_between:1,12|unique:dosens,nip,' . ($this->dosen->id ?? null),
             'nidn' => 'required|string|unique:dosens,nidn|max:255,' . ($this->dosen->id ?? null),
             'name' => 'required|string|max:255',
+            'status' => 'nullable|in:Aktif,Tidak aktif',
             'gelar_depan' => 'nullable|string|max:50',
             'gelar_belakang' => 'nullable|string|max:50',
             'pendidikan' => 'nullable|string|max:100',

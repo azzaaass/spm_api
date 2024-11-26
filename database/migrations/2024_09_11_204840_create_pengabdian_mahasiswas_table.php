@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengabdian_mahasiswas', function (Blueprint $table) {
             $table->id();
-            $table->integer('nim_mahasiswa');
+            $table->bigInteger('nim_mahasiswa');
             $table->foreign('nim_mahasiswa')->references('nim')->on('mahasiswas');
             $table->foreignId('id_pengabdian')->constrained('pengabdians');
             $table->integer('flag');

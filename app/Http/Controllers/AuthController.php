@@ -28,12 +28,8 @@ class AuthController extends Controller
                 'user' => $user->username,
                 'role' => $user->role
             ]
-        ]);
+        ], 200);
     }
-
-    // public function register() {
-
-    // }
 
     public function logout(Request $request)
     {
