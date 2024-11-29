@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PengabdianDosenRequest extends FormRequest
+class ProdiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class PengabdianDosenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nip_dosen' => 'required|exists:dosens,nip',
-            'id_pengabdian' => 'required|exists:pengabdians,id',
-            'flag' => 'required|numeric|min:0',
+            'name' => 'required|string|max:255',
+            'kode_prodi' => 'required|string|max:10|unique:prodis,kode_prodi,' . ($this->prodi->id ?? null),
         ];
     }
 }

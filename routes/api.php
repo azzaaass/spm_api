@@ -12,6 +12,7 @@ use App\Http\Controllers\PengabdianDosenController;
 use App\Http\Controllers\PengabdianMahasiswaController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\PrestasiMahasiswaController;
+use App\Http\Controllers\ProdiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::prefix('/v1')->group(function () {
             Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
             Route::post('/mahasiswa', [MahasiswaController::class, 'store']);
             Route::get('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'show']);
-            Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'update']);
+            Route::put('/mahasiswa/{mahasiswa}', action: [MahasiswaController::class, 'update']);
 
             Route::get('/dosen', [DosenController::class, 'index']);
             Route::post('/dosen', [DosenController::class, 'store']);
@@ -75,6 +76,11 @@ Route::prefix('/v1')->group(function () {
             Route::get('/prestasiMahasiswa/{prestasiMahasiswa}', [PrestasiMahasiswaController::class, 'show']);
             Route::put('/prestasiMahasiswa/{prestasiMahasiswa}', [PrestasiMahasiswaController::class, 'update']);
 
+            Route::get('/prodi', [ProdiController::class, 'index']);
+            Route::post('/prodi', [ProdiController::class, 'store']);
+            Route::get('/prodi/{prodi}', [ProdiController::class, 'show']);
+            Route::put('/prodi/{prodi}', [ProdiController::class, 'update']);
+
             // Route::post('/register', [AuthController::class, 'register']);
         });
 
@@ -90,6 +96,8 @@ Route::prefix('/v1')->group(function () {
             Route::delete('/pengabdianMahasiswa/{pengabdianMahasiswa}', [PengabdianMahasiswaController::class, 'destroy']);
             Route::delete('/prestasi/{prestasi}', [PrestasiController::class, 'destroy']);
             Route::delete('/prestasiMahasiswa/{prestasiMahasiswa}', [PrestasiMahasiswaController::class, 'destroy']);
+            Route::delete('/prodi/{prodi}', [ProdiController::class, 'destroy']);
+
         });
 
         Route::post('/logout', [AuthController::class, 'logout']);

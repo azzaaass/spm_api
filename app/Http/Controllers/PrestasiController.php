@@ -24,7 +24,7 @@ class PrestasiController extends Controller
         try {
             // searching
             (!$searchTable) ?
-                // search using scope search all from penelitian model
+                // search using scope search all from prestasi model
                 $searchResult = Prestasi::when($search, function ($query, $search) {
                     return $query->searchAll($search);
                 })
@@ -38,15 +38,15 @@ class PrestasiController extends Controller
                 $searchResult->orderBy($sortingTable, $sorting);
             }
 
-            $penelitians = $searchResult
-                // ->with('penelitian_dosen.dosen')
-                // ->with('penelitian_mahasiswa.mahasiswa')
+            $prestasis = $searchResult
+                // ->with('prestasi_dosen.dosen')
+                // ->with('prestasi_mahasiswa.mahasiswa')
                 ->paginate($perPage);
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PrestasiResource::collection($penelitians),
-                'meta' => PaginationMetaResource::meta($penelitians),
+                'data' => PrestasiResource::collection($prestasis),
+                'meta' => PaginationMetaResource::meta($prestasis),
             ], 200);
         } catch (Exception $e) {
             return response()->json([
@@ -60,11 +60,11 @@ class PrestasiController extends Controller
     {
         try {
             $validatedData = $request->validated();
-            $penelitian = Prestasi::create($validatedData);
+            $prestasi = Prestasi::create($validatedData);
 
             return response()->json([
                 'message' => 'Data created successfully',
-                'data' => new PrestasiResource($penelitian),
+                'data' => new PrestasiResource($prestasi),
             ], 201);
         } catch (Exception $e) {
             return response()->json([
@@ -74,33 +74,33 @@ class PrestasiController extends Controller
         }
     }
 
-    public function show(Prestasi $penelitian)
+    public function show(Prestasi $prestasi)
     {
-        $penelitian->load('penelitian_mahasiswa.mahasiswa.prodi');
+        $prestasi->load('prestasi_mahasiswa.mahasiswa.prodi');
 
         return response()->json([
             'message' => 'Data retrieved successfully',
-            'data' => new PrestasiResource($penelitian),
+            'data' => new PrestasiResource($prestasi),
         ]);
     }
 
-    public function destroy(Prestasi $penelitian)
+    public function destroy(Prestasi $prestasi)
     {
-        $penelitian->delete();
+        $prestasi->delete();
         return response()->json([
             'message' => 'Data deleted successfully',
         ], 200);
     }
 
-    public function update(PrestasiRequest $request, Prestasi $penelitian)
+    public function update(PrestasiRequest $request, Prestasi $prestasi)
     {
         try {
             $validatedData = $request->validated();
-            $penelitian->update($validatedData);
+            $prestasi->update($validatedData);
 
             return response()->json([
                 'message' => 'Data updated successfully',
-                'data' => new PrestasiResource($penelitian),
+                'data' => new PrestasiResource($prestasi),
             ], 200);
         } catch (Exception $e) {
             return response()->json([

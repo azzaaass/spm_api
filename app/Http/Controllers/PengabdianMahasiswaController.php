@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PengabdianMahasiswaRequest;
+use App\Http\Resources\PaginationMetaResource;
 use App\Http\Resources\PengabdianMahasiswaResource;
 use App\Models\PengabdianMahasiswa;
 use Exception;
@@ -36,7 +37,8 @@ class PengabdianMahasiswaController extends Controller
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PengabdianMahasiswaResource::collection($pengabdianMahasiswa)
+                'data' => PengabdianMahasiswaResource::collection($pengabdianMahasiswa),
+                'meta' => PaginationMetaResource::meta($pengabdianMahasiswa)
             ], 200);
         } catch (Exception $e) {
             return response()->json([

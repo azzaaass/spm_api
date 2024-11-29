@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DosenRequest extends FormRequest
 {
@@ -21,16 +22,48 @@ class DosenRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'nip' => 'required|integer|digits_between:1,12|unique:dosens,nip,' . ($this->dosen->id ?? null),
-            'nidn' => 'required|string|unique:dosens,nidn|max:255,' . ($this->dosen->id ?? null),
-            'name' => 'required|string|max:255',
-            'status' => 'nullable|in:Aktif,Tidak aktif',
-            'gelar_depan' => 'nullable|string|max:50',
-            'gelar_belakang' => 'nullable|string|max:50',
-            'pendidikan' => 'nullable|string|max:100',
-            'kode_dosen' => 'nullable|string|max:10|unique:dosens,kode_dosen,' . ($this->dosen->id ?? null),
-            'id_prodi' => 'required|exists:prodis,id',
-        ];
+        if ($this->method() === 'POST') {
+            return [
+                'nip' => 'required|integer|digits_between:1,12|unique:dosens,nip',
+                'nidn' => 'required|string|unique:dosens,nidn|max:255',
+                'name' => 'required|string|max:255',
+                'status' => 'nullable|in:Aktif,Tidak aktif',
+                'gelar_depan' => 'nullable|string|max:50',
+                'gelar_belakang' => 'nullable|string|max:50',
+                'pendidikan' => 'nullable|string|max:100',
+                'kode_dosen' => 'nullable|string|max:10|unique:dosens,kode_dosen',
+                'id_prodi' => 'required|exists:prodis,id',
+            ];
+        } else {
+            $dosenNip = $this->dosen->nip ?? null;
+            $dosenNidn = $this->dosen->nidn ?? null;
+            $dosenKodeDosen = $this->dosen->kode_dosen ?? null;
+            return [
+                'nip' => [
+                    'required',
+                    'integer',
+                    'digits_between:1,12',
+                    Rule::unique('dosens', 'nip')->ignore($dosenNip, 'nip')
+                ],
+                'nidn' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('dosens', 'nidn')->ignore($dosenNidn, 'nidn')
+                ],
+                'name' => 'required|string|max:255',
+                'status' => 'nullable|in:Aktif,Tidak aktif',
+                'gelar_depan' => 'nullable|string|max:50',
+                'gelar_belakang' => 'nullable|string|max:50',
+                'pendidikan' => 'nullable|string|max:100',
+                'kode_dosen' => [
+                    'nullable',
+                    'string',
+                    'max:12',
+                    Rule::unique('dosens', 'kode_dosen')->ignore($dosenKodeDosen, 'kode_dosen')
+                ],
+                'id_prodi' => 'required|exists:prodis,id',
+            ];
+        }
     }
 }
