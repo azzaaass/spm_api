@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PengabdianDosenRequest;
+use App\Http\Resources\PaginationMetaResource;
 use App\Http\Resources\PengabdianDosenResource;
 use App\Models\PengabdianDosen;
 use Exception;
@@ -37,7 +38,8 @@ class PengabdianDosenController extends Controller
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PengabdianDosenResource::collection($pengabdianDosen)
+                'data' => PengabdianDosenResource::collection($pengabdianDosen),
+                'meta' => PaginationMetaResource::meta($pengabdianDosen)
             ], 200);
         } catch (Exception $e) {
             return response()->json([

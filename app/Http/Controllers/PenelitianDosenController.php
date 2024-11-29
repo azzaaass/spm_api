@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePenelitianDosenRequest;
+use App\Http\Resources\PaginationMetaResource;
 use App\Http\Resources\PenelitianDosenResource;
 use App\Models\PenelitianDosen;
 use Exception;
@@ -38,7 +39,8 @@ class PenelitianDosenController extends Controller
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PenelitianDosenResource::collection($penelitianDosen)
+                'data' => PenelitianDosenResource::collection($penelitianDosen),
+                'meta' => PaginationMetaResource::meta($penelitianDosen)
             ], 200);
         } catch (Exception $e) {
             return response()->json([

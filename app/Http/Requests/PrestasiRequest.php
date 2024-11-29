@@ -22,7 +22,7 @@ class PrestasiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_lomba' => 'nullable|string|max:255',
+            'nama_lomba' => 'required|string|max:255',
             'juara' => 'nullable|string|max:100',
             'url_foto' => 'nullable|url|max:255',
             'url_sertifikat' => 'nullable|url|max:255',

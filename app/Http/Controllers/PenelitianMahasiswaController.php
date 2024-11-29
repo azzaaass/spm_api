@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PenelitianMahasiswaRequest;
+use App\Http\Resources\PaginationMetaResource;
 use App\Http\Resources\PenelitianMahasiswaResource;
 use App\Models\PenelitianMahasiswa;
 use Exception;
@@ -36,7 +37,8 @@ class PenelitianMahasiswaController extends Controller
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PenelitianMahasiswaResource::collection($penelitianMahasiswa)
+                'data' => PenelitianMahasiswaResource::collection($penelitianMahasiswa),
+                'meta' => PaginationMetaResource::meta($penelitianMahasiswa),
             ], 200);
         } catch (Exception $e) {
             return response()->json([

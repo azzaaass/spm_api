@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PrestasiMahasiswaRequest;
+use App\Http\Resources\PaginationMetaResource;
 use App\Http\Resources\PrestasiMahasiswaResource;
 use App\Models\PrestasiMahasiswa;
 use Exception;
@@ -36,7 +37,8 @@ class PrestasiMahasiswaController extends Controller
 
             return response()->json([
                 'message' => 'Data retrieved successfully',
-                'data' => PrestasiMahasiswaResource::collection($prestasiMahasiswa)
+                'data' => PrestasiMahasiswaResource::collection($prestasiMahasiswa),
+                'meta' => PaginationMetaResource::meta($prestasiMahasiswa)
             ], 200);
         } catch (Exception $e) {
             return response()->json([

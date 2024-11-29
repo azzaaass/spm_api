@@ -20,6 +20,7 @@ class PrestasiResource extends JsonResource
             'juara' => $this->juara,
             'url_foto' => $this->url_foto,
             'url_sertifikat' => $this->url_sertifikat,
+            'mahasiswa' => $this->prestasi_mahasiswa,
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         ];
