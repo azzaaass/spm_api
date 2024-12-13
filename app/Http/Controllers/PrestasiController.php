@@ -40,7 +40,7 @@ class PrestasiController extends Controller
 
             $prestasis = $searchResult
                 // ->with('prestasi_dosen.dosen')
-                // ->with('prestasi_mahasiswa.mahasiswa')
+                ->with('prestasi_mahasiswa.mahasiswa')
                 ->paginate($perPage);
 
             return response()->json([

@@ -17,13 +17,17 @@ class MahasiswaController extends Controller
 
         $searchTable = $request->input('s_table', 'nip');
         $search = $request->input('s');
+        $searchLike = $request->input('s_like');
 
         $sortingTable = $request->input('sort_table');
         $sorting = $request->input('sort', 'asc');
 
         try {
             // searching
-            $searchResult = Mahasiswa::when($search, function ($query, $search) use ($searchTable) {
+            $searchResult = Mahasiswa::when($search, function ($query, $search) use ($searchTable, $searchLike) {
+                if ($searchLike) {
+                    return $query->where($searchTable, 'like', "%{$search}%");
+                }
                 return $query->where($searchTable, '=', "{$search}");
             });
 

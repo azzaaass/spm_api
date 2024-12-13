@@ -14,22 +14,22 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(UserSeeder::class);
-        $this->call(ProdiSeeder::class);
-        $this->call(DosenSeeder::class);
-        $this->call(MahasiswaSeeder::class);
-        $this->call(JabatanSeeder::class);
+        // $this->call(ProdiSeeder::class);
+        // $this->call(DosenSeeder::class);
+        // $this->call(MahasiswaSeeder::class);
+        // $this->call(JabatanSeeder::class);
 
-        $this->call(HistoryJabatanSeeder::class);
+        // $this->call(HistoryJabatanSeeder::class);
 
-        $this->call(PenelitianSeeder::class);
-        $this->call(PenelitianDosenSeeder::class);
-        $this->call(PenelitianMahasiswaSeeder::class);
+        // $this->call(PenelitianSeeder::class);
+        // $this->call(PenelitianDosenSeeder::class);
+        // $this->call(PenelitianMahasiswaSeeder::class);
 
-        $this->call(PengabdianSeeder::class);
-        $this->call(PengabdianDosenSeeder::class);
-        $this->call(PengabdianMahasiswaSeeder::class);
+        // $this->call(PengabdianSeeder::class);
+        // $this->call(PengabdianDosenSeeder::class);
+        // $this->call(PengabdianMahasiswaSeeder::class);
 
-        $this->call(PrestasiSeeder::class);
-        $this->call(PrestasiMahasiswaSeeder::class);
+        // $this->call(PrestasiSeeder::class);
+        // $this->call(PrestasiMahasiswaSeeder::class);
     }
 }
