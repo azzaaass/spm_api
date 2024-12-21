@@ -22,23 +22,33 @@ class PengabdianController extends Controller
         $sorting = $request->input('sort', 'asc');
 
         try {
+            // Inisialisasi query builder
+            $query = Pengabdian::query();
+
             // searching
-            (!$searchTable) ?
+            if (!$searchTable) {
                 // search using scope search all from pengabdian model
-                $searchResult = Pengabdian::when($search, function ($query, $search) {
+                $query->when($search, function ($query, $search) {
                     return $query->searchAll($search);
-                })
-                :
-                $searchResult = Pengabdian::when($search, function ($query, $search) use ($searchTable) {
-                    return $query->where($searchTable, '=', "{$search}");
                 });
+            } else {
+                if ($searchTable === "ketua_prodi") {
+                    // by prodi ketua
+                    $query->searchKetua("id_prodi", "=", $search);
+                } else if ($searchTable === "ketua_name") {
+                    // by name ketua
+                    $query->searchKetua("name", "LIKE", "%{$search}%");
+                } else {
+                    $query->where($searchTable, '=', "{$search}");
+                }
+            }
 
             // sorting
             if ($sortingTable) {
-                $searchResult->orderBy($sortingTable, $sorting);
+                $query->orderBy($sortingTable, $sorting);
             }
 
-            $pengabdians = $searchResult
+            $pengabdians = $query
                 ->with('pengabdian_dosen.dosen')
                 ->with('pengabdian_mahasiswa.mahasiswa')
                 ->paginate($perPage);

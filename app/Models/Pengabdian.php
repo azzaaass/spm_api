@@ -30,4 +30,27 @@ class Pengabdian extends Model
                 ->orWhere('tahun', 'like', "%{$search}%");
         });
     }
+
+    public function scopeSearchKetua($query, $table, $operator, $search): mixed
+    {
+        return $query->where(function ($query) use ($table, $operator, $search) {
+            // Cek ketua dari pengabdian_dosen  
+            $query
+                ->whereHas('pengabdian_dosen', function ($subQuery) use ($table, $operator, $search) {
+                    $subQuery
+                        ->where('flag', 1)
+                        ->whereHas('dosen', function ($dosenQuery) use ($table, $operator, $search) {
+                            $dosenQuery->where($table, $operator, $search);
+                        });
+                })
+                // Atau cek ketua dari pengabdian_mahasiswa
+                ->orWhereHas('pengabdian_mahasiswa', function ($subQuery) use ($table, $operator, $search) {
+                    $subQuery
+                        ->where('flag', 1)
+                        ->whereHas('mahasiswa', function ($mahasiswaQuery) use ($table, $operator, $search) {
+                            $mahasiswaQuery->where($table, $operator, $search);
+                        });
+                });
+        });
+    }
 }

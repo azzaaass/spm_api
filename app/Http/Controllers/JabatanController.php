@@ -16,10 +16,14 @@ class JabatanController extends Controller
 
         $searchTable = $request->input('s_table', 'id');
         $search = $request->input('s');
+        $searchLike = filter_var($request->input('s_like', false), FILTER_VALIDATE_BOOLEAN);
 
         try {
             // searching
-            $searchResult = Jabatan::when($search, function ($query, $search) use ($searchTable) {
+            $searchResult = Jabatan::when($search, function ($query, $search) use ($searchTable, $searchLike) {
+                if ($searchLike) {
+                    return $query->where($searchTable, 'like', "%{$search}%");
+                }
                 return $query->where($searchTable, '=', "{$search}");
             });
 

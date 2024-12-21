@@ -13,7 +13,8 @@ class Prestasi extends Model
 
     protected $guarded = ['id'];
 
-    public function prestasi_mahasiswa(){
+    public function prestasi_mahasiswa()
+    {
         return $this->hasMany(PrestasiMahasiswa::class, 'id_prestasi', 'id');
     }
 
@@ -24,5 +25,17 @@ class Prestasi extends Model
                 ->orWhere('nama_lomba', 'like', "%{$search}%")
                 ->orWhere('juara', 'like', "%{$search}%");
         });
+    }
+
+    public function scopeSearchKetua($query, $table, $operator, $search): mixed
+    {
+        return $query
+            ->WhereHas('prestasi_mahasiswa', function ($subQuery) use ($table, $operator, $search) {
+                $subQuery
+                    ->where('flag', 1)
+                    ->whereHas('mahasiswa', function ($mahasiswaQuery) use ($table, $operator, $search) {
+                        $mahasiswaQuery->where($table, $operator, $search);
+                    });
+            });
     }
 }

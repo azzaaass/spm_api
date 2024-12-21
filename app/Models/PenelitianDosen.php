@@ -21,5 +21,6 @@ class PenelitianDosen extends Model
     public function penelitian ()
     {
         return $this->belongsTo(Penelitian::class, 'id_penelitian', 'id');
-    } 
+    }
+    
 }
