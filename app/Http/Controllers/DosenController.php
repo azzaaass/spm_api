@@ -17,13 +17,17 @@ class DosenController extends Controller
 
         $searchTable = $request->input('s_table', 'nip');
         $search = $request->input('s');
+        $searchLike = filter_var($request->input('s_like', false), FILTER_VALIDATE_BOOLEAN);
 
         $sortingTable = $request->input('sort_table');
         $sorting = $request->input('sort', 'asc');
 
         try {
             // searching
-            $searchResult = Dosen::when($search, function ($query, $search) use ($searchTable) {
+            $searchResult = Dosen::when($search, function ($query, $search) use ($searchTable, $searchLike) {
+                if ($searchLike) {
+                    return $query->where($searchTable, 'like', "%{$search}%");
+                }
                 return $query->where($searchTable, '=', "{$search}");
             });
 

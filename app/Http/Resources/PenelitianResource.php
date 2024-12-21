@@ -27,6 +27,7 @@ class PenelitianResource extends JsonResource
             'laporan_akhir' => $this->laporan_akhir,
             'dosen' => $this->penelitian_dosen,
             'mahasiswa' => $this->penelitian_mahasiswa,
+            // 'ketua' => $this->getKetua(),
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

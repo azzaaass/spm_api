@@ -22,27 +22,40 @@ class PenelitianController extends Controller
         $sorting = $request->input('sort', 'asc');
 
         try {
-            // searching
-            (!$searchTable) ?
-                // search using scope search all from penelitian model
-                $searchResult = Penelitian::when($search, function ($query, $search) {
-                    return $query->searchAll($search);
-                })
-                :
-                $searchResult = Penelitian::when($search, function ($query, $search) use ($searchTable) {
-                    return $query->where($searchTable, '=', "{$search}");
-                });
+            // Inisialisasi query builder
+            $query = Penelitian::query();
 
-            // sorting
-            if ($sortingTable) {
-                $searchResult->orderBy($sortingTable, $sorting);
+            // Searching
+            if (!$searchTable) {
+                // search using scope search all from penelitian model
+                $query->when($search, function ($query, $search) {
+                    return $query->searchAll($search);
+                });
+            } else {
+                if ($searchTable === "ketua_prodi") {
+                    // by prodi ketua
+                    $query->searchKetua("id_prodi", "=", $search);
+                } else if ($searchTable === "ketua_name") {
+                    // by name ketua
+                    $query->searchKetua("name", "LIKE", "%{$search}%");
+                } else {
+                    $query->where($searchTable, '=', "{$search}");
+                }
             }
 
-            $penelitians = $searchResult
+
+            // Sorting
+            if ($sortingTable) {
+                $query->orderBy($sortingTable, $sorting);
+            }
+
+            // Eager load relasi dan paginasi
+            $penelitians = $query
                 ->with('penelitian_dosen.dosen')
                 ->with('penelitian_mahasiswa.mahasiswa')
                 ->paginate($perPage);
 
+            // Response
             return response()->json([
                 'message' => 'Data retrieved successfully',
                 'data' => PenelitianResource::collection($penelitians),
@@ -51,7 +64,7 @@ class PenelitianController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => 'Data not found',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 400);
         }
     }

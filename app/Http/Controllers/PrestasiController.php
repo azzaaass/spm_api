@@ -22,23 +22,36 @@ class PrestasiController extends Controller
         $sorting = $request->input('sort', 'asc');
 
         try {
+            // Inisialisasi query builder
+            $query = Prestasi::query();
+
             // searching
-            (!$searchTable) ?
+            if (!$searchTable) {
                 // search using scope search all from prestasi model
-                $searchResult = Prestasi::when($search, function ($query, $search) {
+                $query->when($search, function ($query, $search) {
                     return $query->searchAll($search);
-                })
-                :
-                $searchResult = Prestasi::when($search, function ($query, $search) use ($searchTable) {
-                    return $query->where($searchTable, '=', "{$search}");
                 });
+            } else {
+                if ($searchTable === "ketua_prodi") {
+                    // by prodi ketua
+                    $query->searchKetua("id_prodi", "=", $search);
+                } else if ($searchTable === "ketua_name") {
+                    // by name ketua
+                    $query->searchKetua("name", "LIKE", "%{$search}%");
+                } else {
+                    $query->when($search, function ($query, $search) use ($searchTable) {
+                        return $query->where($searchTable, '=', "{$search}");
+                    });
+                }
+            }
+
 
             // sorting
             if ($sortingTable) {
-                $searchResult->orderBy($sortingTable, $sorting);
+                $query->orderBy($sortingTable, $sorting);
             }
 
-            $prestasis = $searchResult
+            $prestasis = $query
                 // ->with('prestasi_dosen.dosen')
                 ->with('prestasi_mahasiswa.mahasiswa')
                 ->paginate($perPage);
